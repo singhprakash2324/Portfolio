@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ... (Your existing CSS styles remain the same) ... */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .animate-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        .cli-input {
+            background: rgba(26, 32, 44, 0.8);
+            border: 2px solid #4a5568;
+            caret-color: #68d391;
+            color: #68d391;
+        }
+
+        .cli-input:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .id-card-container-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .id-card-container {
+            position: relative;
+            width: 350px;
+            height: 600px;
+            perspective: 1000px;
+        }
+
+        .ribbon {
+            position: absolute;
+            background: linear-gradient(to right, #041ae2, #0033cc);
+            height: 10px;
+            width: 280px;
+            border-radius: 5px;
+            z-index: 9;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-origin: 50% 50%;
+        }
+
+        .id-card {
+            position: absolute;
+            width: 300px;
+            height: 420px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow:
+                0 8px 16px rgba(255, 255, 255, 0.68),
+                0 0 0 1px rgba(255, 255, 255, 0.52);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            cursor: grab;
+            transform-style: preserve-3d;
+            transform-origin: 50% 50%;
+            z-index: 10;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+        }
+
+        .id-card:active {
+            cursor: grabbing;
+            box-shadow: 0 6px 12px rgba(254, 255, 255, 0.85);
+            transform: translateZ(5px);
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 4px solid #a7b1ed;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 1rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            width: 100%;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .detail-value {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex h-screen">
+        <div class="w-2/5 p-8 flex items-center justify-start bg-black flex-shrink-0">
+            <div class="id-card-container-wrapper">
+                <div class="id-card-container" id="idCardContainer">
+                    <div class="ribbon" id="ribbon"></div>
+                    <div class="id-card" id="idCard">
+                        <div class="profile-pic">
+                            <img src="1.jpg" alt="Profile Picture" onerror="this.onerror=null;this.src='https://placehold.co/120x120/a7b1ed/ffffff?text=User';">
+                        </div>
+                        <div class="name">Prakash Singh</div>
+                        <div class="title">AI/ML Engineer</div>
+                        <div class="details">
+                            <div class="detail-row">
+                                <span class="detail-label">College:</span>
+                                <span class="detail-value">Lovely Professional University</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Department:</span>
+                                <span class="detail-value">Engineering</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">prakashsingh.clg@gmail.com</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">DOB:</span>
+                                <span class="detail-value">2005-09-20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="w-3/5 bg-gray-900 text-green-400 font-mono flex flex-col p-4 overflow-hidden">
+            <div id="cli-output" class="flex-grow overflow-y-auto pr-2 custom-scrollbar text-sm leading-relaxed">
+                </div>
+            <div class="flex items-center mt-4 flex-shrink-0 bg-gray-800 rounded-lg p-3 border border-gray-600">
+                <span id="cursor" class="bg-green-400 w-2 h-4 mr-2 animate-blink rounded-sm"></span>
+                <span class="cli-prompt mr-3 font-semibold">prakash@dev:~$</span>
+                <input type="text" id="cli-input" class="flex-grow cli-input rounded px-3 py-2 text-green-400 outline-none transition-all duration-200" placeholder="Type 'help' to get started..." autofocus>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CLI Script ---
+        const cliOutput = document.getElementById('cli-output');
+        const cliInput = document.getElementById('cli-input');
+        const cursor = document.getElementById('cursor');
+
+        let commandHistory = [];
+        let commandIndex = -1; // -1 means no history selected (typing new command)
+        const typingSpeed = 20; // Milliseconds per character for typing effect
+
+        let isTypingEffectActive = false; // Flag to track typing effect status
+
+        // Function to simulate typing effect
+        async function typeWriterEffect(text) {
+            isTypingEffectActive = true; // Set flag when typing starts
+            const lines = text.split('\n');
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const lineElement = document.createElement('div');
+                cliOutput.appendChild(lineElement);
+
+                for (let j = 0; j < line.length; j++) {
+                    if (!isTypingEffectActive) { // If flag is false, immediately complete the remaining text
+                        lineElement.textContent += line.substring(j); // Add rest of current line
+                        for (let k = i + 1; k < lines.length; k++) { // Add remaining lines
+                            addOutputLine(lines[k]); // Use addOutputLine for instant appending
+                        }
+                        cliOutput.scrollTop = cliOutput.scrollHeight;
+                        isTypingEffectActive = false; // Ensure flag is reset after fast-forward
+                        return; // Exit the function immediately
+                    }
+                    lineElement.textContent += line.charAt(j); // Append char to the current line's div
+                    cliOutput.scrollTop = cliOutput.scrollHeight; // Auto-scroll
+                    await new Promise(resolve => setTimeout(resolve, typingSpeed));
+                }
+            }
+            isTypingEffectActive = false; // Reset flag when typing finishes naturally
+        }
+
+        // Function to add a new line to the CLI output (used for instant lines or echo)
+        function addOutputLine(text) {
+            const line = document.createElement('div');
+            line.textContent = text;
+            cliOutput.appendChild(line);
+            cliOutput.scrollTop = cliOutput.scrollHeight; // Auto-scroll
+        }
+
+        // Function to handle commands
+        async function handleCommand(command) {
+            addOutputLine(`$ ${command}`); // Echo the command
+
+            let output = '';
+            switch (command.toLowerCase().trim()) {
+                case 'start':
+                    output = `
+╔══════════════════════════════════════════════════════════════╗
+║                    WELCOME TO PRAKASH'S PORTFOLIO            ║
+╚══════════════════════════════════════════════════════════════╝
+
+👨‍💻 DEVELOPER PROFILE:
+┌─────────────────────────────────────────────────────────────┐
+│ Name:         Prakash Singh                                 │
+│ Role:         AI/ML Engineer & Full-Stack Developer         │
+│ Education:    BTech Computer Science, LPU                   │
+│ Location:     India 🇮🇳                                      │
+│ Experience:   3+ years in software development              │
+└─────────────────────────────────────────────────────────────┘
+
+🚀 CORE TECHNOLOGIES:
+• Programming: JavaScript, Python, Java, C++
+• Frontend: React.js, Vue.js, HTML5, CSS3, Tailwind CSS
+• Backend: Node.js, Express.js, Django, FastAPI
+• Database: MongoDB, PostgreSQL, MySQL, Redis
+• Cloud: AWS, Google Cloud, Docker, Kubernetes
+• AI/ML: TensorFlow, PyTorch, Scikit-learn, OpenAI
+
+💡 SPECIALIZATIONS:
+• Machine Learning & Deep Learning
+
+Type 'projects' to see my work or 'help' for all commands.
+                    `;
+                    break;
+                case 'projects':
+                    output = `
+🛠️  PROJECT SHOWCASE:
+╔══════════════════════════════════════════════════════════════╗
+
+📱 1. AI-POWERED CHAT APPLICATION
+   • Tech Stack: React, Node.js, OpenAI API, Socket.io
+   • Features: Real-time messaging, AI integration, user auth
+   • Repository: github.com/singhprakash2324/ai-chat-app
+   • Status: ✅ Live Production
+
+🛒 2. E-COMMERCE PLATFORM (Full-Stack)
+   • Tech Stack: MERN (MongoDB, Express, React, Node.js)
+   • Features: Payment integration, inventory management, admin panel
+   • Repository: github.com/singhprakash2324/ecommerce-platform
+   • Status: ✅ Live Production
+
+📊 3. DATA ANALYTICS DASHBOARD
+   • Tech Stack: Python, Django, Chart.js, PostgreSQL
+   • Features: Real-time analytics, data visualization, reporting
+   • Repository: github.com/singhprakash2324/analytics-dashboard
+   • Status: ✅ Live Production
+
+🤖 4. MACHINE LEARNING MODEL DEPLOYMENT
+   • Tech Stack: Python, TensorFlow, Flask, Docker, AWS
+   • Features: Image classification, model serving, REST API
+   • Repository: github.com/singhprakash2324/ml-deployment
+   • Status: ✅ Live Production
+
+🎮 5. PORTFOLIO CLI (Current Interface)
+   • Tech Stack: HTML5, CSS3, JavaScript, Tailwind CSS
+   • Features: Interactive terminal, physics simulation, 3D effects
+   • Repository: github.com/singhprakash2324/portfolio-cli
+   • Status: ✅ You're using it now!
+
+╚══════════════════════════════════════════════════════════════╝
+Type 'contact' for my details or 'help' for more commands.
+                    `;
+                    break;
+                case 'contact':
+                    output = `
+📞 CONTACT INFORMATION:
+╔══════════════════════════════════════════════════════════════╗
+║                    LET'S CONNECT & COLLABORATE               ║
+╚══════════════════════════════════════════════════════════════╝
+
+📧 EMAIL:
+   • Primary: prakashsingh.clg@gmail.com
+   • Professional: prakash.singh@developer.com
+
+🌐 SOCIAL PROFILES:
+   • LinkedIn: linkedin.com/in/prakashsingh-dev
+   • GitHub: github.com/singhprakash2324
+   • Twitter: @prakashdev2324
+   • Portfolio: prakashsingh.dev
+
+💼 PROFESSIONAL SERVICES:
+   • Full-Stack Web Development
+   • AI/ML Solutions & Consulting
+   • Technical Content Writing
+   • Code Reviews & Mentoring
+
+🕐 AVAILABILITY:
+   • Open for full-time opportunities
+   • Available for freelance projects
+   • Consultation calls: Schedule at calendly.com/prakashsingh
+
+📍 LOCATION:
+   • Based in: Kanayannur, Kerala, India
+   • Open to: Remote work globally
+   • Time Zone: IST (UTC +5:30)
+
+Feel free to reach out for collaborations, opportunities, or just to say hi! 👋
+                    `;
+                    break;
+                case 'help':
+                    output = `
+🔧 AVAILABLE COMMANDS:
+╔══════════════════════════════════════════════════════════════╗
+║                        COMMAND REFERENCE                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 INFORMATION COMMANDS:
+   start      → Display welcome message and profile overview
+   projects   → Showcase my key projects and technologies
+   skills     → Display technical skills and proficiency levels
+   contact    → Show contact information and social profiles
+
+🛠️ SYSTEM COMMANDS:
+   clear      → Clear the terminal screen
+   help       → Display this help menu
+   stop       → Stop current typing animation
+   exit       → Display goodbye message
+
+💡 NAVIGATION TIPS:
+   • Use ↑/↓ arrow keys to navigate command history
+   • Commands are case-insensitive
+   • Press Alt to interrupt any running process
+   • Type 'start' for a comprehensive introduction
+
+🎯 QUICK START:
+   1. Type 'start' to see my profile
+   2. Type 'projects' to explore my work
+   3. Type 'contact' to connect with me
+
+╔══════════════════════════════════════════════════════════════╗
+║ Tip: This portfolio itself is one of my projects! Check out ║
+║ the interactive ID card with physics simulation on the left ║
+╚══════════════════════════════════════════════════════════════╝
+                    `;
+                    break;
+                case 'stop':
+                    if (isTypingEffectActive) {
+                        isTypingEffectActive = false; // Signal the typing effect to stop
+                        output = "Typing effect stopped.";
+                    } else {
+                        output = "No typing effect is currently active.";
+                    }
+                    break;
+                    case 'exit':
+                    output = `
+👋 GOODBYE!
+╔══════════════════════════════════════════════════════════════╗
+║           Thank you for visiting my portfolio!              ║
+╚══════════════════════════════════════════════════════════════╝
+
+🌟 Before you go:
+   • Don't forget to check out my projects on GitHub
+   • Connect with me on LinkedIn for opportunities
+   • Feel free to reach out via email anytime
+
+💼 Looking forward to potential collaborations!
+
+🚀 Keep coding and stay awesome! 
+   - Prakash Singh
+                    `;
+                    break;
+                
+                case 'skills':
+                    output = `
+🎯 TECHNICAL SKILLS MATRIX:
+╔══════════════════════════════════════════════════════════════╗
+
+🌟 PROGRAMMING LANGUAGES:
+   JavaScript     ████████████████████ 95%
+   Python         ██████████████████░░ 90%
+   Java           ████████████████░░░░ 80%
+   C++            ██████████████░░░░░░ 75%
+   TypeScript     █████████████████░░░ 85%
+
+🎨 FRONTEND TECHNOLOGIES:
+   React.js       ██████████████████░░ 90%
+   Vue.js         ████████████████░░░░ 80%
+   HTML5/CSS3     ████████████████████ 98%
+   Tailwind CSS   ███████████████████░ 92%
+   Bootstrap      █████████████████░░░ 85%
+
+⚙️ BACKEND TECHNOLOGIES:
+   Node.js        ████████████████████ 95%
+   Express.js     ███████████████████░ 92%
+   Django         ████████████████░░░░ 80%
+   FastAPI        ██████████████░░░░░░ 75%
+
+🗄️ DATABASES:
+   MongoDB        ███████████████████░ 90%
+   PostgreSQL     ████████████████░░░░ 82%
+   MySQL          █████████████████░░░ 85%
+   Redis          ██████████████░░░░░░ 70%
+
+🤖 AI/ML FRAMEWORKS:
+   TensorFlow     ████████████████░░░░ 80%
+   PyTorch        ██████████████░░░░░░ 75%
+   Scikit-learn   ███████████████████░ 88%
+   OpenAI API     ████████████████████ 92%
+
+☁️ CLOUD & DEVOPS:
+   AWS            ███████████████░░░░░ 78%
+   Docker         ████████████████░░░░ 82%
+   Kubernetes     ████████████░░░░░░░░ 65%
+   Git/GitHub     ████████████████████ 95%
+
+╚══════════════════════════════════════════════════════════════╝
+                    `;
+                    break;
+                case 'clear':
+                    cliOutput.innerHTML = '';
+                    return; // Don't add extra newline or type effect for clear
+                default:
+                    output = `Command not found: '${command}'. Type 'help' for a list of commands.`;
+                    break;
+            }
+
+            // Simulate typing effect for the output (unless it was a 'stop' command that interrupted it)
+            // The `isTypingEffectActive` check handles if 'stop' fast-forwarded the output already.
+            await typeWriterEffect(output);
+
+            addOutputLine(''); // Add an empty line after output for better readability
+        }
+
+        // Event listener for input field
+        cliInput.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter') {
+                const command = cliInput.value;
+                if (command.trim() === '') {
+                    addOutputLine('$'); // Just show a new prompt if empty
+                    cliInput.value = '';
+                    cliOutput.scrollTop = cliOutput.scrollHeight;
+                    return;
+                }
+
+                commandHistory.push(command);
+                commandIndex = commandHistory.length; // Reset index to end of history
+
+                cliInput.value = ''; // Clear input field
+                cursor.style.display = 'none'; // Hide cursor during output typing
+
+                await handleCommand(command);
+
+                cursor.style.display = 'block'; // Show cursor again
+                cliInput.focus(); // Keep input focused
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault(); // Prevent cursor from moving to start of line
+                if (commandHistory.length > 0) {
+                    commandIndex = Math.max(0, commandIndex - 1);
+                    cliInput.value = commandHistory[commandIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault(); // Prevent cursor from moving to end of line
+                if (commandIndex < commandHistory.length - 1) {
+                    commandIndex++;
+                    cliInput.value = commandHistory[commandIndex];
+                } else {
+                    commandIndex = commandHistory.length;
+                    cliInput.value = ''; // Clear if at end of history
+                }
+            }
+        });
+
+        // Event listener for Alt key press to halt processes (like Ctrl+C)
+        document.addEventListener('keydown', (e) => {
+            if (e.altKey) { // Check if the Alt key is pressed
+                e.preventDefault(); // Prevent default browser behavior (e.g., opening menu)
+
+                if (isTypingEffectActive) {
+                    isTypingEffectActive = false; // Signal the typing effect to stop
+                }
+
+                // Clear the current input line
+                cliInput.value = '';
+
+                cursor.style.display = 'block';
+                cliInput.focus();
+            }
+        });
+
+
+        // --- ID Card Script ---
+        const idCardContainer = document.getElementById('idCardContainer');
+        const ribbon = document.getElementById('ribbon');
+        const idCard = document.getElementById('idCard');
+
+        // Card's current position (top-left corner relative to id-card-container)
+        let cardCurrentX;
+        let cardCurrentY;
+
+        // Physics variables for card's linear motion
+        let cardVelocityX = 0;
+        let cardVelocityY = 0;
+
+        // Physics variables for card's angular motion
+        let angle = 0; // Card rotation angle in radians
+        let angularVelocity = 0;
+
+        // Physics constants (tuned for a card swinging from its center)
+        const damping = 0.97;
+        const gravity = 0.05; // Gravity pulls the card down
+        const springStiffness = 0.005; // Stiffness of the 'invisible' spring pulling it back to center
+        const springDamping = 0.8; // Damping for the spring effect
+
+        let isDraggingCard = false;
+        let dragOffsetX = 0; // Mouse X relative to card's center point
+        let dragOffsetY = 0; // Mouse Y relative to card's center point
+
+        let idCardAnimationFrameId = null;
+
+        // Function to start the ID card animation loop
+        function startIdCardAnimationLoop() {
+            if (!idCardAnimationFrameId) {
+                idCardAnimationFrameId = requestAnimationFrame(animateIdCard);
+            }
+        }
+
+        // Function to stop the ID card animation loop
+        function stopIdCardAnimationLoop() {
+            if (idCardAnimationFrameId) {
+                cancelAnimationFrame(idCardAnimationFrameId);
+                idCardAnimationFrameId = null;
+            }
+        }
+
+        // Main animation loop for ID card physics simulation
+        function animateIdCard() {
+            if (!isDraggingCard) {
+                // Target rest position for the card's center (relative to id-card-container)
+                // This is the center of the id-card-container, adjusted by card dimensions
+                const targetCardCenterX_local = (idCardContainer.offsetWidth / 2);
+                const targetCardCenterY_local = (idCardContainer.offsetHeight / 2);
+
+                // Current center of the card (relative to id-card-container)
+                const currentCardCenterX_local = cardCurrentX + (idCard.offsetWidth / 2);
+                const currentCardCenterY_local = cardCurrentY + (idCard.offsetHeight / 2);
+
+                const dx = currentCardCenterX_local - targetCardCenterX_local;
+                const dy = currentCardCenterY_local - targetCardCenterY_local;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Spring force pulling the card back to the center
+                const forceMagnitude = -springStiffness * distance;
+                const dampedForceMagnitude = forceMagnitude * springDamping;
+
+                const normalizedDx = distance > 0 ? (dx / distance) : 0;
+                const normalizedDy = distance > 0 ? (dy / distance) : 0;
+
+                const forceX = dampedForceMagnitude * normalizedDx;
+                const forceY = dampedForceMagnitude * normalizedDy;
+
+                cardVelocityX += forceX;
+                cardVelocityY += forceY;
+
+                cardVelocityY += gravity; // Apply gravity
+
+                // Angular force to return to 0 angle (no external pivot for swing)
+                const alignmentForce = -0.01 * angle;
+                angularVelocity += alignmentForce;
+
+                cardVelocityX *= damping;
+                cardVelocityY *= damping;
+                angularVelocity *= damping;
+
+                cardCurrentX += cardVelocityX;
+                cardCurrentY += cardVelocityY;
+                angle += angularVelocity;
+
+                // Stop condition: if velocities and distance to rest are negligible
+                if (Math.abs(cardVelocityX) < 0.1 && Math.abs(cardVelocityY) < 0.1 &&
+                    Math.abs(angularVelocity) < 0.001 && Math.abs(angle) < 0.001 &&
+                    distance < 1) {
+                    
+                    // Snap to exact rest state
+                    cardVelocityX = 0;
+                    cardVelocityY = 0;
+                    angularVelocity = 0;
+                    angle = 0;
+                    cardCurrentX = targetCardCenterX_local - (idCard.offsetWidth / 2);
+                    cardCurrentY = targetCardCenterY_local - (idCard.offsetHeight / 2);
+                    
+                    idCard.style.left = `${cardCurrentX}px`;
+                    idCard.style.top = `${cardCurrentY}px`;
+                    idCard.style.transform = `rotate(${angle}rad)`;
+                    
+                    // Also snap ribbon to follow the card's position exactly
+                    ribbon.style.left = `${cardCurrentX + (idCard.offsetWidth / 2) - (ribbon.offsetWidth / 2)}px`;
+                    ribbon.style.top = `${cardCurrentY + (idCard.offsetHeight / 2) - (ribbon.offsetHeight / 2)}px`;
+                    ribbon.style.transform = `rotate(${angle}rad)`;
+
+                    stopIdCardAnimationLoop();
+                    return;
+                }
+            }
+            // Apply updated card position and rotation
+            idCard.style.left = `${cardCurrentX}px`;
+            idCard.style.top = `${cardCurrentY}px`;
+            idCard.style.transform = `rotate(${angle}rad)`;
+
+            // Update ribbon position and rotation to follow the card's center
+            // The ribbon is positioned relative to the ID card's top-left corner
+            // (cardCurrentX, cardCurrentY).
+            // Ribbon's left: (card width / 2) - (ribbon width / 2) to center it horizontally on the card
+            // Ribbon's top: (card height / 2) - (ribbon height / 2) to center it vertically on the card
+            ribbon.style.left = `${cardCurrentX + (idCard.offsetWidth / 2) - (ribbon.offsetWidth / 2)}px`;
+            ribbon.style.top = `${cardCurrentY + (idCard.offsetHeight / 2) - (ribbon.offsetHeight / 2)}px`;
+            ribbon.style.transform = `rotate(${angle}rad)`; // Make ribbon rotate with the card
+
+            idCardAnimationFrameId = requestAnimationFrame(animateIdCard);
+        }
+
+        // Mouse down event on the ID card
+        idCard.addEventListener('mousedown', (e) => {
+            isDraggingCard = true;
+            stopIdCardAnimationLoop();
+            idCard.style.transition = 'none'; // Disable transition during drag for responsiveness
+            ribbon.style.transition = 'none'; // Disable transition during drag for responsiveness
+            idCard.style.cursor = 'grabbing';
+            idCard.style.boxShadow = '0 6px 12px rgba(255, 255, 255, 0.75)'; // Adjusted shadow for dragging
+
+            // Calculate offset from the card's *center* point to the mouse click point
+            const rect = idCard.getBoundingClientRect();
+            const cardCenterAbsoluteX = rect.left + rect.width / 2;
+            const cardCenterAbsoluteY = rect.top + rect.height / 2;
+
+            dragOffsetX = e.clientX - cardCenterAbsoluteX;
+            dragOffsetY = e.clientY - cardCenterAbsoluteY;
+
+            cardVelocityX = 0;
+            cardVelocityY = 0;
+            angularVelocity = 0;
+            angle = 0; // Reset angle on drag start to prevent weird initial rotation
+            idCard.style.transform = `rotate(${angle}rad)`;
+        });
+
+        // Mouse move event (on the document to allow dragging outside card)
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingCard) return;
+
+            // Calculate new card *center* position based on mouse and drag offset
+            const newCardCenterX_viewport = e.clientX - dragOffsetX;
+            const newCardCenterY_viewport = e.clientY - dragOffsetY;
+
+            // Convert center position to card's top-left position relative to id-card-container
+            const idCardContainerRect = idCardContainer.getBoundingClientRect();
+            cardCurrentX = newCardCenterX_viewport - idCardContainerRect.left - (idCard.offsetWidth / 2);
+            cardCurrentY = newCardCenterY_viewport - idCardContainerRect.top - (idCard.offsetHeight / 2);
+
+            // Apply immediate visual updates during drag
+            idCard.style.left = `${cardCurrentX}px`;
+            idCard.style.top = `${cardCurrentY}px`;
+            
+            // Ribbon follows the card immediately
+            ribbon.style.left = `${cardCurrentX + (idCard.offsetWidth / 2) - (ribbon.offsetWidth / 2)}px`;
+            ribbon.style.top = `${cardCurrentY + (idCard.offsetHeight / 2) - (ribbon.offsetHeight / 2)}px`;
+        });
+
+        // Mouse up event (on the document)
+        document.addEventListener('mouseup', (e) => {
+            if (!isDraggingCard) return;
+            isDraggingCard = false;
+            idCard.style.cursor = 'grab';
+            
+            // Re-enable transitions for smooth return to rest state
+            idCard.style.transition = 'transform 0.3s cubic-bezier(0.22, 0.255, 0.25, 1), box-shadow 0.3s ease';
+            ribbon.style.transition = 'transform 0.3s cubic-bezier(0.22, 0.255, 0.25, 1)'; /* Ribbon also transitions */
+            
+            // Reset to default shadow on mouse up
+            idCard.style.boxShadow = `
+                0 8px 16px rgba(255, 255, 255, 0.5), 
+                0 0 0 1px rgba(255, 255, 255, 0.5)
+            `;
+            startIdCardAnimationLoop();
+        });
+
+        // --- Mouse-Following 3D Tilt and Professional Shadow for ID Card ---
+        idCardContainer.addEventListener('mousemove', (e) => {
+            // Only apply tilt and dynamic shadow if not actively dragging
+            if (!isDraggingCard) {
+                const rect = idCard.getBoundingClientRect(); // Get current position of the card itself
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                // Calculate delta from center, normalized to -1 to 1
+                const deltaX = (mouseX - centerX) / (rect.width / 2); 
+                const deltaY = (mouseY - centerY) / (rect.height / 2); 
+
+                // Calculate tilt angles (adjust multipliers for intensity)
+                const rotateX = deltaY * 8; // More tilt vertically when mouse is higher/lower
+                const rotateY = deltaX * -8; // More tilt horizontally when mouse is left/right (inverted for natural feel)
+
+                // Apply transform for tilt and slight lift. This will combine with the physics rotation.
+                // We'll apply this on the card itself, as the ribbon will just follow the card's position.
+                idCard.style.transform = `translateZ(10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotate(${angle}rad)`;
+
+                // Professional shadow based on mouse position (subtle directional light)
+                // Offset the shadow in the opposite direction of the mouse to simulate light from cursor
+                const shadowOffsetX = -deltaX * 15;
+                const shadowOffsetY = -deltaY * 15;
+
+                idCard.style.boxShadow = `
+                    ${shadowOffsetX}px ${shadowOffsetY}px 30px rgba(255, 255, 255, 0.3), /* Main directional shadow */
+                    0 0 0 1px rgba(255, 255, 255, 0.04), /* Subtle border */
+                    inset ${(-shadowOffsetX / 2)}px ${(-shadowOffsetY / 2)}px 10px rgba(255, 255, 255, 0.05) /* Very subtle inner highlight */
+                `;
+            }
+        });
+
+        idCardContainer.addEventListener('mouseleave', () => {
+            // Reset to default card appearance when mouse leaves container
+            if (!isDraggingCard) {
+                idCard.style.transform = `translateZ(0px) rotateX(0deg) rotateY(0deg) rotate(${angle}rad)`; // Include current physics rotation
+                idCard.style.boxShadow = `
+                    0 8px 16px rgba(255, 255, 255, 0.1), 
+                    0 0 0 1px rgba(255, 255, 255, 0.02)
+                `;
+            }
+        });
+
+
+        // --- Combined Initialization ---
+        window.onload = function() {
+            // Initialize CLI
+            window.initCLI();
+
+            // Initialize ID Card & Ribbon positioning
+            // Place the card initially in the center of its container
+            const initialCardX = (idCardContainer.offsetWidth / 2) - (idCard.offsetWidth / 2);
+            const initialCardY = (idCardContainer.offsetHeight / 2) - (idCard.offsetHeight / 2);
+
+            cardCurrentX = initialCardX;
+            cardCurrentY = initialCardY;
+
+            idCard.style.left = `${cardCurrentX}px`;
+            idCard.style.top = `${cardCurrentY}px`;
+            idCard.style.transform = `rotate(0rad)`; // Ensure no initial rotation
+
+            // Position the ribbon in the middle of the ID card (relative to its own container)
+            // It needs to be positioned within the `idCardContainer`.
+            // left: `cardCurrentX` (card's left) + `idCard.offsetWidth / 2` (card's center) - `ribbon.offsetWidth / 2` (ribbon's half width)
+            // top: `cardCurrentY` (card's top) + `idCard.offsetHeight / 2` (card's center) - `ribbon.offsetHeight / 2` (ribbon's half height)
+            ribbon.style.left = `${cardCurrentX + (idCard.offsetWidth / 2) - (ribbon.offsetWidth / 2)}px`;
+            ribbon.style.top = `${cardCurrentY + (idCard.offsetHeight / 2) - (ribbon.offsetHeight / 2)}px`;
+            ribbon.style.transform = `rotate(0rad)`; // Ensure no initial rotation for ribbon
+
+            startIdCardAnimationLoop(); // Start animation loop on load
+        };
+
+        // Initial welcome message - now attached to window
+        window.initCLI = async function() {
+            await typeWriterEffect("Initializing Prakash's Portfolio CLI...\n");
+            await typeWriterEffect("Type 'help' to get started.\n");
+            addOutputLine(''); // Add an empty line for the first prompt
+            cliInput.focus(); // Focus the input field on load
+        }
+    </script>
+</body>
+</html>
